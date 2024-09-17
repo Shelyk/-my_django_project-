@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Регістрація{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form class="form-signin" method="post" action="{% url 'signup' %}">
+            {% csrf_token %}
+            <h1 class="h3 mb-3 mt-3 font-weight-normal">Для регістрації вкажіть імя і пароль</h1>
+            <label for="inputUsername" class="sr-only">Імя користувача</label>
+            {{ form.username }}
+            <label for="inputPassword" class="sr-only">Пароль</label>
+            {{ form.password }}
+            <label for="ReInputPassword" class="sr-only">Повторіть пароль</label>
+            {{ form.repeat_password }}
+            <button class="btn mt-2 btn-lg btn-primary btn-block" type="submit">Регістрація</button>
+        </form>
+    </div>
+{% endblock %}
